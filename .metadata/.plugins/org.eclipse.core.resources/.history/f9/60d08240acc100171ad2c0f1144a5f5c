@@ -1,0 +1,30 @@
+package cache;
+
+public class InMemoryCache {
+	public void set () {
+		
+	}
+	
+	public String get(int key) {
+		return "";
+	}
+	
+	public int count(String value) {
+		return -1;
+	}
+	
+	public void delete(int key) {
+		
+	}
+	
+	public void beginTansaction () {
+		
+	}
+	public void commit() {
+		
+	}
+	
+	public void rollBack() {
+		
+	}
+}

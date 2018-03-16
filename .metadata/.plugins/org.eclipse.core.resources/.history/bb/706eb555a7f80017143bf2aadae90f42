@@ -1,0 +1,44 @@
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.PriorityQueue;
+
+import org.junit.jupiter.api.Test;
+
+class TestSimulation {
+
+	@Test
+	void test() {
+		double meanA = 0.0;
+		double meanB = 0.0;
+	
+		double medianA = 0.0;
+		double medianB = 0.0;
+	
+		PriorityQueue minHeap = new PriorityQueue<Double>(1000);
+	
+		PriorityQueue maxHeap = new PriorityQueue<Double>(1000);
+		
+		MedianTracker mtA = new MedianTracker();
+		MedianTracker mtB = new MedianTracker();
+	
+		Simulation sA = new Simulation();
+		Simulation sB = new Simulation();
+		
+		for (int i = 0; i < 10000; i++) {
+			double totalA = sA.runMultiYears(20, 100000.0, 9.4324, 15.675);
+			meanA = (meanA * i + totalA) / (i+1);
+			mtA.read(totalA);
+			medianA = mtA.median();
+	
+			double totalB = sB.runMultiYears(20, 100000.0, 6.189, 6.3438);
+			meanB = (meanB * i + totalB) / (i+1);
+			mtB.read(totalA);
+			medianA = mtB.median();
+	
+		}
+	
+		System.out.println(medianA);
+		System.out.println(medianB);
+	
+	}
+}

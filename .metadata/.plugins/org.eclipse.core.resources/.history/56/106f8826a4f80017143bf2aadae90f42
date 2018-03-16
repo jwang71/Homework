@@ -1,0 +1,53 @@
+import java.util.Collections;
+import java.util.PriorityQueue;
+
+/**
+ * 
+ */
+
+/**
+ * @author 77
+ *
+ */
+public class MedianTracker {
+	  PriorityQueue<Integer> smallPart;
+	  PriorityQueue<Integer> largePart;
+	  
+	  public medianTracker() {
+	    // add new fields and complete the constructor if necessary.
+	    largePart = new PriorityQueue<Integer>();
+	    smallPart = new PriorityQueue<Integer>(11, Collections.reverseOrder());
+	  }
+	  
+	  public void read(int value) {
+	    // write your implementation here.
+	    if (smallPart.isEmpty() || value <= smallPart.peek()) {
+	      smallPart.offer(value);
+	    } else {
+	      largePart.offer(value);
+	    }
+	    
+	    if (smallPart.size() - largePart.size() >= 2) {
+	      largePart.offer(smallPart.poll());
+	    } else if (largePart.size() > smallPart.size()) {
+	      smallPart.offer(largePart.poll());
+	    }
+	    
+	  }
+	  
+	  public Double median() {
+	    // write your implementation here.
+	    int size = this.size();
+	    if (size == 0) {
+	      return null;
+	    } else if (size % 2 == 0) {
+	      return (smallPart.peek() + largePart.peek())/2.0;
+	    } else {
+	      return (double)(smallPart.peek());
+	    }
+	  }
+	  
+	  private int size() {
+	    return smallPart.size() + largePart.size();
+	  }
+	}

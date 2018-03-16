@@ -1,0 +1,5 @@
+package inmemorydb;
+
+public class InMemoryDB {
+
+}

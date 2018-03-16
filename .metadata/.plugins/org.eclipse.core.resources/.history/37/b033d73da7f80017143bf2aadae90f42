@@ -1,0 +1,41 @@
+import java.util.PriorityQueue;
+import java.util.Random;
+
+/**
+ * 
+ */
+
+/**
+ * @author 77
+ *
+ */
+public class Simulation {
+	
+	private double medianA = 0.0;
+	private double medianB = 0.0;
+	MedianTracker mtA = new MedianTracker();
+	MedianTracker mtB = new MedianTracker();
+	
+	public Simulation() {
+	}
+
+	double INFLATION = 0.035;
+	
+	public double getNextYear(double base, double mean, double sd) {
+		Random random = new Random();
+		double myNextGaussian = random.nextGaussian()*sd+mean;
+		double nextYear = base*(1 + myNextGaussian)/(1+INFLATION);
+		return nextYear;
+	}
+
+	public double runMultiYears(int numberOfYear, double base, double mean, double sd) {
+		double curYear = base;
+		double nextYear = 0.0;
+	
+		for (int i = 0; i < numberOfYear; i++) {
+			nextYear = getNextYear(curYear, mean, sd);
+			curYear = nextYear;
+		}
+		return curYear;
+	}
+}

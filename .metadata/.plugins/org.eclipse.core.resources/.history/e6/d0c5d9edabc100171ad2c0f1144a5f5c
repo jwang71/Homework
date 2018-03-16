@@ -1,0 +1,11 @@
+package cache;
+
+public class InMemoryCache {
+	public void set () {
+		
+	}
+	
+	public String get(int key) {
+		return "";
+	}
+}

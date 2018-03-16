@@ -1,0 +1,179 @@
+package inmemorydb;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class InMemoryDB {
+	private Map<String, Integer> map = new HashMap<>();
+	private Map<Integer, Integer> countMap = new HashMap<>();
+	private Map<String, Integer> tempMap;
+	private Map<Integer, List<String>> tempCountMap = new HashMap<>();
+	
+	public void set(String key, Integer value) {
+		if (checkTransaction()) {
+			tempMap.put(key, value);
+			if (tempCountMap.containsKey(value)) {
+				Set<String> list = tempCountMap.get(value);
+				list.add(key);
+				tempCountMap.put(value, list);
+			} else {
+				Set<Integer> list = new HashSet<>();
+				list.add(key);
+				tempCountMap.put(value, list);
+			}
+		} else {
+			map.put(key, value);
+			if (countMap.containsKey(value)) {
+				Set<Integer> list = countMap.get(value);
+				list.add(key);
+				countMap.put(value, list);
+			} else {
+				Set<Integer> list = new HashSet<>();
+				list.add(key);
+				countMap.put(value, list);
+			}
+		}
+	}
+	
+	public Integer get(String key, Integer value) {
+		if (checkTransaction()) {
+			return tempMap.containsKey(key) ? tempMap.get(key) : 0;
+		} else {
+			return map.containsKey(key) ? map.get(key) : 0;			
+		}
+	}
+	
+	public void delete(String key) {
+		if (checkTransaction()) {
+			tempMap.remove(key);
+		} else {
+			map.remove(key);		
+		}
+	}
+	
+	public int count(Integer value) {
+		int number = 0;
+		if (tempMap != null) {
+			Set<Integer> tempList = tempCountMap.get(value);
+			Set<Integer> list = countMap.get(value);
+			
+			int count1 = tempList == null ? 0 : tempCountMap.get(value).size();
+			number += count1;
+			
+			if (list != null) {
+				for (Integer i : list) {
+					if (!tempList.contains(i)) {
+						number++;
+					}
+				}
+			}
+		} else {
+			number = countMap.containsKey(value) ? countMap.get(value).size() : 0;
+		}
+		return number;
+	}
+	
+	public void begin() {
+		tempMap = new HashMap();
+	}
+	
+	public void rollback() {
+		
+	}
+	
+	public void commit() {
+		
+	}
+	
+	private boolean checkTransaction() {
+		return false;
+	}
+}
+
+	
+//	public void set (int key, String value) {
+//		if (tempMap != null) {
+//			tempMap.put(key, value);
+//			if (tempCountMap.containsKey(value)) {
+//				Set<Integer> list = tempCountMap.get(value);
+//				list.add(key);
+//				tempCountMap.put(value, list);
+//			} else {
+//				Set<Integer> list = new HashSet<>();
+//				list.add(key);
+//				tempCountMap.put(value, list);
+//			}
+//		} else {
+//			map.put(key, value);
+//			if (countMap.containsKey(value)) {
+//				Set<Integer> list = countMap.get(value);
+//				list.add(key);
+//				countMap.put(value, list);
+//			} else {
+//				Set<Integer> list = new HashSet<>();
+//				list.add(key);
+//				countMap.put(value, list);
+//			}
+//		}
+//	}
+//	
+//	public String get(int key) {
+//		if (tempMap != null) {
+//			return tempMap.get(key);
+//		} else {
+//			return map.get(key);			
+//		}
+//	}
+//	
+//	public int count(String value) {
+//		int number = 0;
+//		if (tempMap != null) {
+//			Set<Integer> tempList = tempCountMap.get(value);
+//			Set<Integer> list = countMap.get(value);
+//			
+//			int count1 = tempList == null ? 0 : tempCountMap.get(value).size();
+//			number += count1;
+//			
+//			if (list != null) {
+//				for (Integer i : list) {
+//					if (!tempList.contains(i)) {
+//						number++;
+//					}
+//				}
+//			}
+//		} else {
+//			number = countMap.containsKey(value) ? countMap.get(value).size() : 0;
+//		}
+//		return number;
+//	}
+//	
+//	public void delete(int key) {
+//		if (tempMap != null) {
+//			tempMap.remove(key);
+//		} else {
+//			map.remove(key);			
+//		}
+//	}
+//	
+//	public void beginTransaction () {
+//		tempMap = new ConcurrentHashMap<Integer, String>();
+//		tempCountMap = new ConcurrentHashMap<String, Set<Integer>>();
+//	}
+//	
+//	public void commit() {
+//		for (Map.Entry<Integer, String> entry : tempMap.entrySet()) {
+//			map.put(entry.getKey(), entry.getValue());			
+//		}
+//	}
+//	
+//	public void rollBack() {
+////		for (Map.Entry<Integer, String> entry : map.entrySet()) {
+////			tempMap.put(entry.getKey(), entry.getValue());
+////		}	
+//		//transactionBegin = false;
+//		for (Map.Entry<Integer, String> entry : tempMap.entrySet()) {
+//			tempMap.remove(entry.getKey());
+//		}
+//	}
+//}
+//

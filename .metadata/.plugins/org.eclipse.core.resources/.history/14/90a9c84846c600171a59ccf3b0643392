@@ -1,0 +1,49 @@
+package inmemorydb;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class InMemoryDB {
+	private Map<String, Integer> map = new HashMap<>();
+	private Map<Integer, Integer> countMap = new HashMap<>();
+	private Map<String, Integer> tempMap;
+	private Map<Integer, Integer> tempCountMap = new HashMap<>();
+	
+	public void set(String key, Integer value) {
+		
+		map.put(key, value);
+		if (countMap.containsKey(key)) {
+			countMap.put(value, countMap.get(key) + 1);
+		} else {
+			countMap.put(value, 1);
+		}
+	}
+	
+	public Integer get(String key, Integer value) {
+		return map.containsKey(key) ? map.get(key) : 0;
+	}
+	
+	public void delete(String key) {
+		map.remove(key);
+	}
+	
+	public int count(Integer value) {
+		return countMap.get(value);
+	}
+	
+	public void begin() {
+		tempMap = new HashMap();
+	}
+	
+	public void rollback() {
+		
+	}
+	
+	public void commit() {
+		
+	}
+	
+	private boolean chekhTransaction() {
+		
+	}
+}

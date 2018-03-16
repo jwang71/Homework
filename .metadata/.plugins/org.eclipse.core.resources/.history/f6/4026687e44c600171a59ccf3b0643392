@@ -1,0 +1,8 @@
+package inmemorydb;
+
+import java.util.HashMap;
+
+public class InMemoryDB {
+	private Map<String, Integer> map = new HashMap<>();
+	
+}

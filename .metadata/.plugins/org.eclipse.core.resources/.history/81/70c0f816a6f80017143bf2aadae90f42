@@ -1,0 +1,71 @@
+import java.util.PriorityQueue;
+import java.util.Random;
+
+/**
+ * 
+ */
+
+/**
+ * @author 77
+ *
+ */
+public class Simulation {
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		double meanA = 0.0;
+		double meanB = 0.0;
+	
+		double medianA = 0.0;
+		double medianB = 0.0;
+	
+		PriorityQueue minHeap = new PriorityQueue<Double>(1000);
+	
+		PriorityQueue maxHeap = new PriorityQueue<Double>(1000);
+		
+		MedianTracker mtA = new MedianTracker();
+		MedianTracker mtB = new MedianTracker();
+	
+		for (int i = 0; i < 10000; i++) {
+			double totalA = runMultiYears(20, 100000, 0.094324, 15.675);
+			meanA = (meanA * i + totalA) / (i+1);
+			mtA.read(totalA);
+			medianA = mtA.median();
+	
+			double totalB = runMultiYears(20, 100000, 0.06189, 6.3438);
+			meanB = (meanB * i + totalB) / (i+1);
+			mtB.read(totalA);
+			medianA = mtB.median();
+	
+		}
+	
+		System.out.println(medianA);
+		System.out.println(medianB);
+	
+	}
+
+	double INFLATION = 0.035;
+	
+	public double getNextYear(double base, double mean, double sd) {
+		Random random = new Random();
+		double myNextGaussian = random.nextGaussian()*sd+mean;
+	
+		double nextYear = base*(1 + myNextGaussian)/(1+INFLATION);
+	
+		return nextYear;
+	}
+
+	public double runMultiYears(int numberOfYear, double base, double mean, double sd) {
+		double curYear = base;
+		double nextYear = 0.0;
+	
+		for (int i = 0; i < numberOfYear; i++) {
+			nextYear = getNextYear(curYear, mean, sd);
+			curYear = nextYear;
+		}
+	
+		return curYear;
+	}
+}

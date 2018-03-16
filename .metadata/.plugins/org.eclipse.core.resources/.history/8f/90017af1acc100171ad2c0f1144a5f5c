@@ -1,0 +1,41 @@
+package cache;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class InMemoryCache {
+	Map<Integer, String> map = new HashMap<> ();
+	
+	public void set (int key, String value) {
+		map.put(key, value);
+	}
+	
+	public String get(int key) {
+		return map.get(key);
+	}
+	
+	public int count(String value) {
+		int number = 0;
+		for (Map.Entry<Integer, String> entry : map.entrySet()) {
+			if (entry.getValue().equals(value)) {
+				number++;
+			}
+		}
+		return number;
+	}
+	
+	public void delete(int key) {
+		
+	}
+	
+	public void beginTansaction () {
+		
+	}
+	public void commit() {
+		
+	}
+	
+	public void rollBack() {
+		
+	}
+}

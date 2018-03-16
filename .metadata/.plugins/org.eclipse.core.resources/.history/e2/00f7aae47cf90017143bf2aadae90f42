@@ -1,0 +1,35 @@
+import java.util.Random;
+
+/**
+ * 
+ */
+
+/**
+ * @author 77
+ *
+ */
+public class Simulation {
+	double INFLATION = 0.035;
+
+	public double getNextYear(double base, double mean, double sd) {
+		Random random = new Random();
+		//System.out.println("nextGaussian: " + random.nextGaussian()/100);
+		double myNextGaussian = (random.nextGaussian()*sd+mean)/100;
+		//System.out.println("myNextGaussian is: " + myNextGaussian);
+		double nextYear = (base*(1 + myNextGaussian))/(1+INFLATION);
+		//System.out.println("nextYear is: " + nextYear);
+		return nextYear;
+	}
+
+	public double runMultiYears(int numberOfYear, double base, double mean, double sd) {
+		double curYear = base;
+		double nextYear = 1.0;
+	
+		for (int i = 0; i < numberOfYear; i++) {
+			nextYear = getNextYear(curYear, mean, sd);
+			curYear = nextYear;
+		}
+		//System.out.println("20th year " + sd + " total is: " + curYear);
+		return curYear;
+	}
+}

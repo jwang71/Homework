@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Move 3 elements to &apos;WebProject1/src/api&apos;&#x0A;- Original project: &apos;WebProject1&apos;&#x0A;- Destination element: &apos;WebProject1/src/api&apos;&#x0A;- Original elements:&#x0A;     rpc.GetRestaurantsNearby.java&#x0A;     rpc.RecommendRestaurants.java&#x0A;     rpc.SetVisitedRestaurants.java&#x0A;- Update references to refactored element" description="Move compilation units" destination="/src&lt;api" element1="/src&lt;rpc{GetRestaurantsNearby.java" element2="/src&lt;rpc{RecommendRestaurants.java" element3="/src&lt;rpc{SetVisitedRestaurants.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.move" patterns="*" policy="org.eclipse.jdt.ui.moveResources" qualified="false" references="true" stamp="1509318376513" units="3" version="1.0"/>
+</session>
